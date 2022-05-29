@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		996B0B6528440DBA00017AE5 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996B0B6428440DBA00017AE5 /* CardView.swift */; };
+		996B0B6728441B8C00017AE5 /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996B0B6628441B8C00017AE5 /* AspectVGrid.swift */; };
 		9999B39828403041007A34A4 /* SetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999B39728403041007A34A4 /* SetApp.swift */; };
 		9999B39A28403041007A34A4 /* SetGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999B39928403041007A34A4 /* SetGameView.swift */; };
 		9999B39C28403044007A34A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9999B39B28403044007A34A4 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		996B0B6428440DBA00017AE5 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		996B0B6628441B8C00017AE5 /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 		9999B39428403041007A34A4 /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9999B39728403041007A34A4 /* SetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetApp.swift; sourceTree = "<group>"; };
 		9999B39928403041007A34A4 /* SetGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameView.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 			children = (
 				9999B39728403041007A34A4 /* SetApp.swift */,
 				9999B39928403041007A34A4 /* SetGameView.swift */,
+				996B0B6628441B8C00017AE5 /* AspectVGrid.swift */,
 				996B0B6428440DBA00017AE5 /* CardView.swift */,
 				9999B3A528403292007A34A4 /* SetGame.swift */,
 				9999B3A7284087E6007A34A4 /* SetGameViewModel.swift */,
@@ -151,6 +154,7 @@
 			files = (
 				9999B39A28403041007A34A4 /* SetGameView.swift in Sources */,
 				9999B3A628403292007A34A4 /* SetGame.swift in Sources */,
+				996B0B6728441B8C00017AE5 /* AspectVGrid.swift in Sources */,
 				9999B39828403041007A34A4 /* SetApp.swift in Sources */,
 				99AADD322841E82400EAE5BD /* Diamond.swift in Sources */,
 				996B0B6528440DBA00017AE5 /* CardView.swift in Sources */,

@@ -11,13 +11,9 @@ struct SetGameView: View {
     @ObservedObject var setGame: SetGameViewModel
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                ForEach(setGame.cards) { card in
-                    CardView(card: card).aspectRatio(2/3, contentMode: .fit)
-                        .padding(5)
-                }
-            }
+        AspectVGrid(items: setGame.cards, aspectRatio: 2/3) { card in
+            CardView(card: card).aspectRatio(2/3, contentMode: .fit)
+                .padding(5)
         }
     }
 }
@@ -42,5 +38,6 @@ struct SetGameView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         SetGameView(setGame: SetGameViewModel())
+//            .preferredColorScheme(.dark)
     }
 }
