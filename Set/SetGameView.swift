@@ -14,6 +14,9 @@ struct SetGameView: View {
         AspectVGrid(items: setGame.cards, aspectRatio: 2/3) { card in
             CardView(card: card).aspectRatio(2/3, contentMode: .fit)
                 .padding(5)
+                .onTapGesture {
+                    setGame.choose(card)
+                }
         }
     }
 }
@@ -38,6 +41,6 @@ struct SetGameView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         SetGameView(setGame: SetGameViewModel())
-//            .preferredColorScheme(.dark)
+            .previewDevice("iPhone 13 Pro")
     }
 }

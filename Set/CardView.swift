@@ -15,7 +15,12 @@ struct CardView: View {
         GeometryReader { geometry in
             ZStack {
                 rect.fill().foregroundColor(.white)
-                rect.strokeBorder(lineWidth: DrawingConstants.lineWidth)
+                
+                if card.isChosen {
+                    rect.strokeBorder(lineWidth: DrawingConstants.lineWidth+1).foregroundColor(.blue)
+                } else {
+                    rect.strokeBorder(lineWidth: DrawingConstants.lineWidth)
+                }
                     
                 VStack {
                     ForEach((1...card.number), id: \.self) { num in

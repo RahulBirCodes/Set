@@ -8,7 +8,7 @@
 import SwiftUI
 
 class SetGameViewModel: ObservableObject {
-    @Published var setGame = SetGame(colors: ["purple", "blue", "pink"], maxNumberOfShapes: 3)
+    @Published var setGame = SetGame(colors: ["purple", "blue", "orange"], maxNumberOfShapes: 3)
     
     var cards: [SetGame.Card] {
         return setGame.cards
@@ -20,10 +20,16 @@ class SetGameViewModel: ObservableObject {
             return Color.purple
         case "blue":
             return Color.blue
-        case "pink":
-            return Color.pink
+        case "orange":
+            return Color.orange
         default:
-            return Color.red
+            return Color.gray
         }
+    }
+    
+    // MARK: - Intent(s)
+    
+    func choose(_ card: SetGame.Card) {
+        setGame.choose(card)
     }
 }

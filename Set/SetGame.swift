@@ -12,6 +12,27 @@ struct SetGame {
     private(set) var cards: [Card]
     private(set) var colors: [String]
     
+    private var selectedCardsIndices: [Int] {
+        get { cards.indices.filter({ cards[$0].isChosen })}
+        set { cards.indices.forEach({ cards[$0].isChosen = newValue.contains($0)})}
+    }
+    
+    mutating func choose(_ card: Card) {
+        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }) {
+            // Deselect card
+            if card.isChosen {
+                cards[chosenIndex].isChosen = false
+                selectedCardsIndices.removeAll(where: { $0 == chosenIndex })
+            } else {
+                if selectedCardsIndices.count < 3 {
+                    selectedCardsIndices.append(chosenIndex)
+                } else {
+                    selectedCardsIndices = [chosenIndex]
+                }
+            }
+        }
+    }
+    
     init(colors: [String], maxNumberOfShapes: Int) {
         cards = []
         self.colors = colors
