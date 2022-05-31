@@ -15,7 +15,9 @@ struct SetGameView: View {
             CardView(card: card).aspectRatio(2/3, contentMode: .fit)
                 .padding(5)
                 .onTapGesture {
-                    setGame.choose(card)
+                    if !(card.matched != nil && card.matched! == true) {
+                        setGame.choose(card)
+                    }
                 }
         }
     }

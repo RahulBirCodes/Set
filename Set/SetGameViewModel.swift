@@ -11,7 +11,7 @@ class SetGameViewModel: ObservableObject {
     @Published var setGame = SetGame(colors: ["purple", "blue", "orange"], maxNumberOfShapes: 3)
     
     var cards: [SetGame.Card] {
-        return setGame.cards
+        return setGame.cardsInGame
     }
     
     static func findColorValue(_ color: String) -> Color {

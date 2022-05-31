@@ -16,10 +16,20 @@ struct CardView: View {
             ZStack {
                 rect.fill().foregroundColor(.white)
                 
-                if card.isChosen {
-                    rect.strokeBorder(lineWidth: DrawingConstants.lineWidth+1).foregroundColor(.blue)
+                let pickBorder = rect.strokeBorder(lineWidth: DrawingConstants.lineWidth+1)
+                
+                if let matched = card.matched {
+                    if matched {
+                        pickBorder.foregroundColor(.green)
+                    } else {
+                        pickBorder.foregroundColor(.red)
+                    }
                 } else {
-                    rect.strokeBorder(lineWidth: DrawingConstants.lineWidth)
+                    if card.isChosen {
+                        pickBorder.foregroundColor(.blue)
+                    } else {
+                        rect.strokeBorder(lineWidth: DrawingConstants.lineWidth)
+                    }
                 }
                     
                 VStack {

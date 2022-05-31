@@ -9,30 +9,60 @@ import Foundation
 
 struct SetGame {
     
-    private(set) var cards: [Card]
+    private var cards: [Card]
+    var cardsInGame: [Card]
+    
     private(set) var colors: [String]
     
     private var selectedCardsIndices: [Int] {
-        get { cards.indices.filter({ cards[$0].isChosen })}
-        set { cards.indices.forEach({ cards[$0].isChosen = newValue.contains($0)})}
+        get { cardsInGame.indices.filter({ cardsInGame[$0].isChosen })}
+        set { cardsInGame.indices.forEach({ cardsInGame[$0].isChosen = newValue.contains($0)})}
     }
     
     mutating func choose(_ card: Card) {
-        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }) {
+        if selectedCardsIndices.count == 3 { resetCardsAfterMatchCheck() }
+        if let chosenIndex = cardsInGame.firstIndex(where: { $0.id == card.id }) {
             // Deselect card
-            if card.isChosen {
-                cards[chosenIndex].isChosen = false
+            if cardsInGame[chosenIndex].isChosen {
+                cardsInGame[chosenIndex].isChosen = false
                 selectedCardsIndices.removeAll(where: { $0 == chosenIndex })
+                print("huhhhhhh")
             } else {
-                if selectedCardsIndices.count < 3 {
-                    selectedCardsIndices.append(chosenIndex)
-                } else {
-                    selectedCardsIndices = [chosenIndex]
+                selectedCardsIndices.append(chosenIndex)
+                print(selectedCardsIndices)
+                if selectedCardsIndices.count == 3 {
+                    if checkMatch(for: selectedCardsIndices.map({ cardsInGame[$0] })) {
+                        selectedCardsIndices.forEach({ cardsInGame[$0].matched = true })
+                    } else {
+                        selectedCardsIndices.forEach({ cardsInGame[$0].matched = false })
+                    }
                 }
             }
         }
     }
     
+    private mutating func resetCardsAfterMatchCheck() {
+        // change code so that matching cards get replaced with new cards 
+        cardsInGame.removeAll { $0.matched != nil && $0.matched! == true }
+        cardsInGame.indices.forEach {
+            if let matched = cardsInGame[$0].matched {
+                if !matched {
+                    cardsInGame[$0].matched = nil
+                }
+            }
+        }
+        selectedCardsIndices.removeAll()
+    }
+    
+    private func checkMatch(for cards: [Card]) -> Bool {
+        let sameShape = (cards[0].shape == cards[1].shape) && (cards[1].shape == cards[2].shape)
+        let sameFill = (cards[0].fill == cards[1].fill) && (cards[1].fill == cards[2].fill)
+        let sameColor = (cards[0].color == cards[1].color) && (cards[1].color == cards[2].color)
+        let sameNum = (cards[0].number == cards[1].number) && (cards[1].number == cards[2].number)
+        
+        return (sameShape || !sameShape) && (sameFill || !sameFill) && (sameColor || !sameColor) && (sameNum || !sameNum)
+    }
+
     init(colors: [String], maxNumberOfShapes: Int) {
         cards = []
         self.colors = colors
@@ -48,7 +78,8 @@ struct SetGame {
                 }
             }
         }
-        print(cards.count)
+        cards.shuffle()
+        cardsInGame = Array(cards[0...11])
     }
     
     struct Card: Identifiable {
@@ -56,12 +87,18 @@ struct SetGame {
         let shape: Shape
         let fill: Fill
         let color: String
-        var isPartOfSet: Bool = false
+        var matched: Bool?
         var isChosen: Bool = false
         let id: Int
         
-        enum Shape: CaseIterable { case Diamond, Squiggle, Oval }
+        enum Shape: CaseIterable, Equatable { case Diamond, Squiggle, Oval }
         
-        enum Fill: CaseIterable { case Solid, Striped, Open }
+        enum Fill: CaseIterable, Equatable { case Solid, Striped, Open }
+    }
+}
+
+extension SetGame.Card {
+    func checkCardElementInPossibleSet(_ set: [Card], for content: () -> Bool) {
+        
     }
 }
