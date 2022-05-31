@@ -55,12 +55,18 @@ struct SetGame {
     }
     
     private func checkMatch(for cards: [Card]) -> Bool {
-        let sameShape = (cards[0].shape == cards[1].shape) && (cards[1].shape == cards[2].shape)
-        let sameFill = (cards[0].fill == cards[1].fill) && (cards[1].fill == cards[2].fill)
-        let sameColor = (cards[0].color == cards[1].color) && (cards[1].color == cards[2].color)
-        let sameNum = (cards[0].number == cards[1].number) && (cards[1].number == cards[2].number)
+        let sameShapes = compareThreeElements(cards[0].shape, cards[1].shape, cards[2].shape)
+        let sameNum = compareThreeElements(cards[0].number, cards[1].number, cards[2].number)
+        let sameFill = compareThreeElements(cards[0].fill, cards[1].fill, cards[2].fill)
+        let sameColor = compareThreeElements(cards[0].color, cards[1].color, cards[2].color)
         
-        return (sameShape || !sameShape) && (sameFill || !sameFill) && (sameColor || !sameColor) && (sameNum || !sameNum)
+        return sameShapes && sameNum && sameFill && sameColor
+    }
+    
+    private func compareThreeElements<T: Equatable>(_ elementOne: T, _ elementTwo: T, _ elementThree: T) -> Bool {
+        let allSame = (elementOne == elementTwo) && (elementTwo == elementThree)
+        let allDiff = (elementOne != elementTwo) && (elementTwo != elementThree) && (elementOne != elementThree)
+        return allSame || allDiff
     }
 
     init(colors: [String], maxNumberOfShapes: Int) {
@@ -94,11 +100,5 @@ struct SetGame {
         enum Shape: CaseIterable, Equatable { case Diamond, Squiggle, Oval }
         
         enum Fill: CaseIterable, Equatable { case Solid, Striped, Open }
-    }
-}
-
-extension SetGame.Card {
-    func checkCardElementInPossibleSet(_ set: [Card], for content: () -> Bool) {
-        
     }
 }
