@@ -10,7 +10,8 @@ import Foundation
 struct SetGame {
     
     private var cards: [Card]
-    var cardsInGame: [Card]
+    private(set) var cardsInGame: [Card]
+    private var cardsUsed: Int
     
     private(set) var colors: [String]
     
@@ -20,33 +21,54 @@ struct SetGame {
     }
     
     mutating func choose(_ card: Card) {
-        if selectedCardsIndices.count == 3 { resetCardsAfterMatchCheck() }
+        if selectedCardsIndices.count == 3 { updateCardDeckAfterMatchCheck() }
         if let chosenIndex = cardsInGame.firstIndex(where: { $0.id == card.id }) {
             // Deselect card
             if cardsInGame[chosenIndex].isChosen {
                 cardsInGame[chosenIndex].isChosen = false
                 selectedCardsIndices.removeAll(where: { $0 == chosenIndex })
-                print("huhhhhhh")
             } else {
                 selectedCardsIndices.append(chosenIndex)
-                print(selectedCardsIndices)
                 if selectedCardsIndices.count == 3 {
-                    if checkMatch(for: selectedCardsIndices.map({ cardsInGame[$0] })) {
-                        selectedCardsIndices.forEach({ cardsInGame[$0].matched = true })
-                    } else {
-                        selectedCardsIndices.forEach({ cardsInGame[$0].matched = false })
+                    let match = checkMatch(for: selectedCardsIndices.map({ cardsInGame[$0] }))
+                    selectedCardsIndices.forEach {
+                        cardsInGame[$0].matched = match
                     }
                 }
             }
         }
     }
     
-    private mutating func resetCardsAfterMatchCheck() {
-        // change code so that matching cards get replaced with new cards 
-        cardsInGame.removeAll { $0.matched != nil && $0.matched! == true }
-        cardsInGame.indices.forEach {
+    mutating func newGame() {
+        cards.shuffle()
+        cardsUsed = 12
+        cardsInGame = Array(cards[0..<cardsUsed])
+    }
+    
+    mutating func deal3Cards() {
+        if cardsUsed < cards.count {
+            let initialCt = cardsUsed
+            updateCardDeckAfterMatchCheck()
+            if cardsUsed == initialCt {
+                let numOfCardsToAdd = (cardsUsed+3 <= cards.count) ? 3 : cards.count - cardsUsed
+                cardsInGame.append(contentsOf: cards[cardsUsed..<cardsUsed+numOfCardsToAdd])
+                cardsUsed += numOfCardsToAdd
+            }
+            
+        }
+    }
+    
+    private mutating func updateCardDeckAfterMatchCheck() {
+        selectedCardsIndices.forEach {
             if let matched = cardsInGame[$0].matched {
-                if !matched {
+                if matched {
+                    if cardsUsed < cards.count {
+                        cardsInGame[$0] = cards[cardsUsed]
+                        cardsUsed += 1
+                    } else {
+                        cardsInGame.remove(at: $0)
+                    }
+                } else {
                     cardsInGame[$0].matched = nil
                 }
             }
@@ -85,7 +107,8 @@ struct SetGame {
             }
         }
         cards.shuffle()
-        cardsInGame = Array(cards[0...11])
+        cardsUsed = 12
+        cardsInGame = Array(cards[0..<12])
     }
     
     struct Card: Identifiable {
