@@ -27,6 +27,8 @@ class SetGameViewModel: ObservableObject {
         }
     }
     
+    func disableButton() -> Bool { return setGame.cardsUsed >= setGame.cards.count }
+    
     // MARK: - Intent(s)
     
     func choose(_ card: SetGame.Card) {

@@ -27,7 +27,7 @@ struct SetGameView: View {
                 Spacer()
                 deal3CardsButton
             }
-            .padding(10)
+            .padding(.horizontal)
             .font(.largeTitle)
         }
     }
@@ -47,7 +47,7 @@ struct SetGameView: View {
                 Text("3")
             }
         }
-
+        .disabled(setGame.disableButton())
     }
 }
 

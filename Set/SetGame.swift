@@ -9,9 +9,9 @@ import Foundation
 
 struct SetGame {
     
-    private var cards: [Card]
+    private(set) var cards: [Card]
     private(set) var cardsInGame: [Card]
-    private var cardsUsed: Int
+    private(set) var cardsUsed: Int
     
     private(set) var colors: [String]
     
