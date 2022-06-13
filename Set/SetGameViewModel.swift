@@ -10,8 +10,18 @@ import SwiftUI
 class SetGameViewModel: ObservableObject {
     @Published var setGame = SetGame(colors: ["purple", "blue", "orange"], maxNumberOfShapes: 3)
     
-    var cards: [SetGame.Card] {
-        return setGame.cardsInGame
+    typealias Card = SetGame.Card
+    
+    var cardsCurrentlyInGame: [Card] {
+        return setGame.cardsCurrentlyInGame
+    }
+    
+    var undealtCards: [Card] {
+        return setGame.undealtCards
+    }
+    
+    var matchedCards: [Card] {
+        return setGame.matchedCards
     }
     
     static func findColorValue(_ color: String) -> Color {
@@ -27,7 +37,7 @@ class SetGameViewModel: ObservableObject {
         }
     }
     
-    func disableButton() -> Bool { return setGame.cardsUsed >= setGame.cards.count }
+//    func disableButton() -> Bool { return setGame.cardsUsed >= setGame.cards.count }
     
     // MARK: - Intent(s)
     
@@ -35,11 +45,15 @@ class SetGameViewModel: ObservableObject {
         setGame.choose(card)
     }
     
-    func newGame() {
-        setGame.newGame()
+    func dealCards() {
+        setGame.dealCards()
     }
     
-    func deal3Cards() {
-        setGame.deal3Cards()
-    }
+//    func newGame() {
+//        setGame.newGame()
+//    }
+//
+//    func deal3Cards() {
+//        setGame.deal3Cards()
+//    }
 }

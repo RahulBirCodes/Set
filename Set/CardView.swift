@@ -18,19 +18,25 @@ struct CardView: View {
                 
                 let pickBorder = rect.strokeBorder(lineWidth: DrawingConstants.lineWidth+1)
                 
-                if let matched = card.matched {
-                    if matched {
-                        pickBorder.foregroundColor(.green)
-                    } else {
-                        pickBorder.foregroundColor(.red)
-                    }
+                if card.isChosen {
+                    pickBorder.foregroundColor(.blue)
                 } else {
-                    if card.isChosen {
-                        pickBorder.foregroundColor(.blue)
-                    } else {
-                        rect.strokeBorder(lineWidth: DrawingConstants.lineWidth)
-                    }
+                    rect.strokeBorder(lineWidth: DrawingConstants.lineWidth)
                 }
+                
+//                if let matched = card.matched {
+//                    if matched {
+//                        pickBorder.foregroundColor(.green)
+//                    } else {
+//                        pickBorder.foregroundColor(.red)
+//                    }
+//                } else {
+//                    if card.isChosen {
+//                        pickBorder.foregroundColor(.blue)
+//                    } else {
+//                        rect.strokeBorder(lineWidth: DrawingConstants.lineWidth)
+//                    }
+//                }
                     
                 VStack {
                     ForEach((1...card.number), id: \.self) { num in
