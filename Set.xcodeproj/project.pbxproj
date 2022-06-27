@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99397AE0286A76B300D4D4F0 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99397ADF286A76B300D4D4F0 /* Cardify.swift */; };
 		996B0B6528440DBA00017AE5 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996B0B6428440DBA00017AE5 /* CardView.swift */; };
 		996B0B6728441B8C00017AE5 /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996B0B6628441B8C00017AE5 /* AspectVGrid.swift */; };
 		9999B39828403041007A34A4 /* SetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999B39728403041007A34A4 /* SetApp.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		99397ADF286A76B300D4D4F0 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		996B0B6428440DBA00017AE5 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		996B0B6628441B8C00017AE5 /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 		9999B39428403041007A34A4 /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +63,7 @@
 		9999B39628403041007A34A4 /* Set */ = {
 			isa = PBXGroup;
 			children = (
+				99397ADF286A76B300D4D4F0 /* Cardify.swift */,
 				9999B39728403041007A34A4 /* SetApp.swift */,
 				9999B39928403041007A34A4 /* SetGameView.swift */,
 				996B0B6628441B8C00017AE5 /* AspectVGrid.swift */,
@@ -154,6 +157,7 @@
 			files = (
 				9999B39A28403041007A34A4 /* SetGameView.swift in Sources */,
 				9999B3A628403292007A34A4 /* SetGame.swift in Sources */,
+				99397AE0286A76B300D4D4F0 /* Cardify.swift in Sources */,
 				996B0B6728441B8C00017AE5 /* AspectVGrid.swift in Sources */,
 				9999B39828403041007A34A4 /* SetApp.swift in Sources */,
 				99AADD322841E82400EAE5BD /* Diamond.swift in Sources */,

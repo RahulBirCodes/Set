@@ -17,7 +17,8 @@ struct SetGame {
     private(set) var colors: [String]
     
     private var selectedCardsIndices: [Int] {
-        cardsCurrentlyInGame.indices.filter({ cardsCurrentlyInGame[$0].isChosen })
+        get { cardsCurrentlyInGame.indices.filter({ cardsCurrentlyInGame[$0].isChosen }) }
+        set { cardsCurrentlyInGame.indices.forEach({ cardsCurrentlyInGame[$0].isChosen = newValue.contains($0) }) }
     }
     
     init(colors: [String], maxNumberOfShapes: Int) {
@@ -57,19 +58,57 @@ struct SetGame {
             if cardsCurrentlyInGame[chosenIndex].isChosen {
                 cardsCurrentlyInGame[chosenIndex].isChosen = false
             } else {
+                if selectedCardsIndices.count == 3 {
+                    selectedCardsIndices = []
+                }
                 cardsCurrentlyInGame[chosenIndex].isChosen = true
                 if selectedCardsIndices.count == 3 {
                     let match = checkMatch(for: selectedCardsIndices.map({ cardsCurrentlyInGame[$0] }))
-                    selectedCardsIndices.forEach {
-                        if match {
-                            matchedCards.append(cardsCurrentlyInGame[$0])
-                            cardsCurrentlyInGame.remove(at: $0)
+                    if match {
+                        selectedCardsIndices.forEach {
+                            cardsCurrentlyInGame[$0].matched = true
+                            cardsCurrentlyInGame[$0].isChosen = false
                         }
+                        let matched = cardsCurrentlyInGame.filter({ $0.matched })
+                        cardsCurrentlyInGame.removeAll(where: { $0.matched })
+                        matchedCards.append(contentsOf: matched)
                     }
                 }
             }
         }
     }
+                
+//                cardsCurrentlyInGame[chosenIndex].isChosen = true
+//                if selectedCardsIndices.count > 3 {
+//                    selectedCardsIndices = []
+//                } else if selectedCardsIndices.count == 3 {
+//                    let match = checkMatch(for: selectedCardsIndices.map({ cardsCurrentlyInGame[$0] }))
+//                    if match {
+//                        selectedCardsIndices.forEach {
+//                            cardsCurrentlyInGame[$0].matched = true
+//                            cardsCurrentlyInGame[$0].isChosen = false
+//                        }
+//                        let matched = cardsCurrentlyInGame.filter({ $0.matched })
+//                        cardsCurrentlyInGame.removeAll(where: { $0.matched })
+//                        matchedCards.append(contentsOf: matched)
+//                    }
+//                }
+//                if selectedCardsIndices.count == 3 {
+//                    let match = checkMatch(for: selectedCardsIndices.map({ cardsCurrentlyInGame[$0] }))
+//                    if match {
+//                        selectedCardsIndices.forEach {
+//                            cardsCurrentlyInGame[$0].matched = true
+//                            cardsCurrentlyInGame[$0].isChosen = false
+//                        }
+//                        let matched = cardsCurrentlyInGame.filter({ $0.matched })
+//                        cardsCurrentlyInGame.removeAll(where: { $0.matched })
+//                        matchedCards.append(contentsOf: matched)
+//                    }
+//                    selectedCardsIndices = []
+//                }
+//            }
+//        }
+//    }
     
     private func checkMatch(for cards: [Card]) -> Bool {
         let sameShapes = compareThreeElements(cards[0].shape, cards[1].shape, cards[2].shape)
@@ -199,7 +238,7 @@ struct SetGame {
         let shape: Shape
         let fill: Fill
         let color: String
-//        var matched: Bool = false
+        var matched: Bool = false
         var isChosen: Bool = false
         let id: String
         

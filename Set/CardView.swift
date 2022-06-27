@@ -9,34 +9,13 @@ import SwiftUI
 
 struct CardView: View {
     let card: SetGame.Card
-    let rect = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
+//    let rect = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                rect.fill().foregroundColor(.white)
-                
-                let pickBorder = rect.strokeBorder(lineWidth: DrawingConstants.lineWidth+1)
-                
-                if card.isChosen {
-                    pickBorder.foregroundColor(.blue)
-                } else {
-                    rect.strokeBorder(lineWidth: DrawingConstants.lineWidth)
-                }
-                
-//                if let matched = card.matched {
-//                    if matched {
-//                        pickBorder.foregroundColor(.green)
-//                    } else {
-//                        pickBorder.foregroundColor(.red)
-//                    }
-//                } else {
-//                    if card.isChosen {
-//                        pickBorder.foregroundColor(.blue)
-//                    } else {
-//                        rect.strokeBorder(lineWidth: DrawingConstants.lineWidth)
-//                    }
-//                }
+//            ZStack {
+//                rect.fill().foregroundColor(.white)
+//                rect.strokeBorder(lineWidth: DrawingConstants.lineWidth)
                     
                 VStack {
                     ForEach((1...card.number), id: \.self) { num in
@@ -46,7 +25,8 @@ struct CardView: View {
                     }
                 }
                 .padding(DrawingConstants.padding)
-            }
+                .modifier(Cardify())
+//            }
         }
     }
     
@@ -96,8 +76,6 @@ struct CardView: View {
     }
     
     private struct DrawingConstants {
-        static let cornerRadius: CGFloat = 12
-        static let lineWidth: CGFloat = 3
         static let shapeLineWidth: CGFloat = 2
         static let padding: CGFloat = 8
         static let shadedSymbolOpacity: CGFloat = 0.5

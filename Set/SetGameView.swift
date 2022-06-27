@@ -10,60 +10,58 @@ import SwiftUI
 struct SetGameView: View {
     @ObservedObject var setGame: SetGameViewModel
     
+    @Namespace private var dealingNamespace
     var body: some View {
-        ZStack(alignment: .bottom) {
-            VStack {
-                AspectVGrid(items: setGame.cardsCurrentlyInGame, aspectRatio: 2/3) { card in
-                    CardView(card: card).aspectRatio(2/3, contentMode: .fit)
-                        .padding(5)
-                        .onTapGesture {
+        VStack {
+            AspectVGrid(items: setGame.cardsCurrentlyInGame, aspectRatio: 2/3) { card in
+                CardView(card: card).aspectRatio(2/3, contentMode: .fit)
+                    .padding(5)
+                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                    .onTapGesture {
+                        withAnimation {
                             setGame.choose(card)
                         }
-                }
-                
-                //            HStack {
-                //                newGameButton
-                //                Spacer()
-                //                deal3CardsButton
-                //            }
-                //            .padding(.horizontal)
-                //            .font(.largeTitle)
+                    }
             }
-            undealtCards
+            Spacer()
+            HStack {
+                undealtCards
+                Spacer()
+                matchedCards
+            }
+            .padding(5)
         }
     }
     
-//    var newGameButton: some View {
-//        Button {
-//            setGame.newGame()
-//        } label: {
-//            Text("New Game")
-//        }
-//    }
+    private func zIndex(of card: SetGame.Card) -> Double {
+        -Double(setGame.undealtCards.firstIndex(where: { $0.id == card.id }) ?? 0)
+    }
     
     var undealtCards: some View {
         ZStack {
             ForEach(setGame.undealtCards) { card in
                 CardView(card: card)
+                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                    .zIndex(zIndex(of: card))
             }
         }
         .frame(width: CardConstants.undealtWidth, height: CardConstants.undealtHeight)
         .onTapGesture {
-            setGame.dealCards()
+            withAnimation {
+                setGame.dealCards()
+            }
         }
     }
     
-//    var deal3CardsButton: some View {
-//        Button {
-//            setGame.deal3Cards()
-//        } label: {
-//            HStack(spacing: 0) {
-//                Image(systemName: "plus")
-//                Text("3")
-//            }
-//        }
-//        .disabled(setGame.disableButton())
-//    }
+    var matchedCards: some View {
+        ZStack {
+            ForEach(setGame.matchedCards) { card in
+                CardView(card: card)
+                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+            }
+        }
+        .frame(width: CardConstants.undealtWidth, height: CardConstants.undealtHeight)
+    }
     
     private struct CardConstants {
         static let color = Color.red
