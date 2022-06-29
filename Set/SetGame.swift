@@ -55,12 +55,12 @@ struct SetGame {
     
     mutating func choose(_ card: Card) {
         if let chosenIndex = cardsCurrentlyInGame.firstIndex(where: { $0.id == card.id }) {
+            match = nil
             // Deselect card
             if cardsCurrentlyInGame[chosenIndex].isChosen {
                 cardsCurrentlyInGame[chosenIndex].isChosen = false
             } else {
                 if selectedCardsIndices.count == 3 {
-                    match = nil
                     selectedCardsIndices = []
                 }
                 cardsCurrentlyInGame[chosenIndex].isChosen = true
