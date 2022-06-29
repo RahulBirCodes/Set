@@ -8,15 +8,30 @@
 
 import SwiftUI
 
-struct Cardify: ViewModifier {
-    let rect = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
+struct Cardify: ViewModifier, Animatable {
+    
+    var animatableData: CGFloat {
+        get { scale }
+        set { scale = newValue }
+    }
+    
+    init(isChosen: Bool) {
+        scale = isChosen ? 1.1 : 1
+        shadowRadius = isChosen ? 5 : 0
+    }
+    
+    var scale: CGFloat
+    var shadowRadius: CGFloat
     
     func body(content: Content) -> some View {
         ZStack {
+            let rect = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
             rect.fill().foregroundColor(.white)
             rect.strokeBorder(lineWidth: DrawingConstants.lineWidth)
             content
         }
+        .shadow(radius: shadowRadius)
+        .scaleEffect(x: scale, y: scale)
     }
     
     private struct DrawingConstants {
@@ -26,7 +41,7 @@ struct Cardify: ViewModifier {
 }
 
 extension View {
-    func cardify() -> some View {
-        self.modifier(Cardify())
+    func cardify(isChosen: Bool) -> some View {
+        self.modifier(Cardify(isChosen: isChosen))
     }
 }

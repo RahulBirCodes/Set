@@ -13,15 +13,19 @@ class SetGameViewModel: ObservableObject {
     typealias Card = SetGame.Card
     
     var cardsCurrentlyInGame: [Card] {
-        return setGame.cardsCurrentlyInGame
+        setGame.cardsCurrentlyInGame
     }
     
     var undealtCards: [Card] {
-        return setGame.undealtCards
+        setGame.undealtCards
     }
     
     var matchedCards: [Card] {
-        return setGame.matchedCards
+        setGame.matchedCards
+    }
+    
+    var match: Bool? {
+        setGame.match
     }
     
     static func findColorValue(_ color: String) -> Color {
@@ -36,7 +40,7 @@ class SetGameViewModel: ObservableObject {
             return Color.gray
         }
     }
-    
+
 //    func disableButton() -> Bool { return setGame.cardsUsed >= setGame.cards.count }
     
     // MARK: - Intent(s)

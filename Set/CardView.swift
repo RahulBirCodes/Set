@@ -25,7 +25,7 @@ struct CardView: View {
                     }
                 }
                 .padding(DrawingConstants.padding)
-                .modifier(Cardify())
+                .cardify(isChosen: card.isChosen)
 //            }
         }
     }

@@ -9,27 +9,43 @@ import SwiftUI
 
 struct SetGameView: View {
     @ObservedObject var setGame: SetGameViewModel
-    
     @Namespace private var dealingNamespace
+    
     var body: some View {
-        VStack {
-            AspectVGrid(items: setGame.cardsCurrentlyInGame, aspectRatio: 2/3) { card in
-                CardView(card: card).aspectRatio(2/3, contentMode: .fit)
-                    .padding(5)
-                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
-                    .onTapGesture {
-                        withAnimation {
-                            setGame.choose(card)
-                        }
+        ZStack {
+            Group {
+                if let match = setGame.match {
+                    if match {
+                        Color.mint
+                    } else {
+                        Color.pink
                     }
+                } else {
+                    Color.clear
+                }
             }
-            Spacer()
-            HStack {
-                undealtCards
+            .ignoresSafeArea()
+            .transition(.asymmetric(insertion: .scale, removal: .identity))
+            
+            VStack {
+                AspectVGrid(items: setGame.cardsCurrentlyInGame, aspectRatio: 2/3) { card in
+                    CardView(card: card).aspectRatio(2/3, contentMode: .fit)
+                        .padding(5)
+                        .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                        .onTapGesture {
+                            withAnimation {
+                                setGame.choose(card)
+                            }
+                        }
+                }
                 Spacer()
-                matchedCards
+                HStack {
+                    undealtCards
+                    Spacer()
+                    matchedCards
+                }
+                .padding(5)
             }
-            .padding(5)
         }
     }
     
