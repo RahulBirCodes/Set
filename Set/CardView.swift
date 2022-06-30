@@ -9,24 +9,19 @@ import SwiftUI
 
 struct CardView: View {
     let card: SetGame.Card
-//    let rect = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
+    var isDealt: Bool
     
     var body: some View {
         GeometryReader { geometry in
-//            ZStack {
-//                rect.fill().foregroundColor(.white)
-//                rect.strokeBorder(lineWidth: DrawingConstants.lineWidth)
-                    
-                VStack {
-                    ForEach((1...card.number), id: \.self) { num in
-                        let scaleRatio: CGFloat = CGFloat(Double(card.number)/3)
-                        findShapeAndFill(scale: scaleRatio)
-                            .foregroundColor(SetGameViewModel.findColorValue(card.color))
-                    }
+            VStack {
+                ForEach((1...card.number), id: \.self) { num in
+                    let scaleRatio: CGFloat = CGFloat(Double(card.number)/3)
+                    findShapeAndFill(scale: scaleRatio)
+                        .foregroundColor(SetGameViewModel.findColorValue(card.color))
                 }
-                .padding(DrawingConstants.padding)
-                .cardify(isChosen: card.isChosen)
-//            }
+            }
+            .padding(DrawingConstants.padding)
+            .cardify(isChosen: card.isChosen, isDealt: isDealt)
         }
     }
     

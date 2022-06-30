@@ -29,9 +29,10 @@ struct SetGameView: View {
             
             VStack {
                 AspectVGrid(items: setGame.cardsCurrentlyInGame, aspectRatio: 2/3) { card in
-                    CardView(card: card).aspectRatio(2/3, contentMode: .fit)
+                    CardView(card: card, isDealt: true).aspectRatio(2/3, contentMode: .fit)
                         .padding(5)
                         .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                        .id(card.id)
                         .onTapGesture {
                             withAnimation {
                                 setGame.choose(card)
@@ -56,7 +57,7 @@ struct SetGameView: View {
     var undealtCards: some View {
         ZStack {
             ForEach(setGame.undealtCards) { card in
-                CardView(card: card)
+                CardView(card: card, isDealt: false)
                     .matchedGeometryEffect(id: card.id, in: dealingNamespace)
                     .zIndex(zIndex(of: card))
             }
@@ -72,7 +73,7 @@ struct SetGameView: View {
     var matchedCards: some View {
         ZStack {
             ForEach(setGame.matchedCards) { card in
-                CardView(card: card)
+                CardView(card: card, isDealt: true)
                     .matchedGeometryEffect(id: card.id, in: dealingNamespace)
             }
         }

@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct AspectVGrid<Item, ItemView>: View where ItemView: View, Item: Identifiable {
+struct AspectVGrid<Item, ItemView>: View
+where ItemView: View, Item: Identifiable & Equatable {
     var items: [Item]
     var aspectRatio: CGFloat
     var content: (Item) -> ItemView
@@ -24,14 +25,20 @@ struct AspectVGrid<Item, ItemView>: View where ItemView: View, Item: Identifiabl
         GeometryReader { geometry in
             VStack {
                 let width: CGFloat = widthThatFits(itemCount: items.count, in: geometry.size, itemAspectRatio: aspectRatio)
-                ScrollView {
-                    LazyVGrid(columns: [adaptiveGridItem(width: width)], spacing: 0) {
-                        ForEach(items) { item in
-                            content(item).aspectRatio(aspectRatio, contentMode: .fit)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        LazyVGrid(columns: [adaptiveGridItem(width: width)], spacing: 0) {
+                            ForEach(items) { item in
+                                content(item).aspectRatio(aspectRatio, contentMode: .fit)
+                            }
+                        }
+                        .onChange(of: items) { items in
+                            withAnimation {
+                                proxy.scrollTo(items.last?.id)
+                            }
                         }
                     }
                 }
-                Spacer(minLength: 0)
             }
         }
     }

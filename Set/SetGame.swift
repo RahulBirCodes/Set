@@ -95,7 +95,7 @@ struct SetGame {
         return allSame || allDiff
     }
     
-    struct Card: Identifiable {
+    struct Card: Identifiable, Equatable {
         let number: Int
         let shape: Shape
         let fill: Fill
